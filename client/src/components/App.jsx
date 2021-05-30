@@ -21,7 +21,7 @@ class App extends React.Component {
   getFromDB() {
     axios.get('/all')
     .then(response => {
-      console.log(response.data)
+      console.log('data successfully imported from database')
       this.changeState(response.data)
     })
     .catch(error => {
@@ -50,18 +50,42 @@ class App extends React.Component {
     })
   }
 
+
+
   render() {
-    var mappedPokemon = this.state.pokedex.map((pokemon, index) => {
-      return (
-      <div key={index}>
-        <p>
-        Name: {pokemon.name} <br></br>
-        Type: {pokemon.type} <br></br>
-        <img src={pokemon.img} />
-        </p>
-      </div>
-      )
-    })
+    // var filteredPokemon;
+    // if (this.state.dropdown !== "") {
+    //   filteredPokemon = this.state.pokedex.filter((pokemon) => pokemon.type === this.state.dropdown)
+    // } else {
+    //   filteredPokemon = this.state.pokedex;
+    // }
+    // console.log(filteredPokemon)
+
+    if (this.state.dropdown === "") {
+      var mappedAndFiltered = this.state.pokedex.map((pokemon, index) => {
+        return (
+        <div key={index}>
+          <p>
+          Name: {pokemon.name} <br></br>
+          Type: {pokemon.type} <br></br>
+          <img src={pokemon.img} />
+          </p>
+        </div>
+        )
+      })
+    } else {
+      var mappedAndFiltered = this.state.pokedex.filter(pokemon => pokemon.type === this.state.dropdown).map((pokemon, index) => {
+        return (
+        <div key={index}>
+          <p>
+          Name: {pokemon.name} <br></br>
+          Type: {pokemon.type} <br></br>
+          <img src={pokemon.img} />
+          </p>
+        </div>
+        )
+      })
+    }
 
     return (
       <div>
@@ -76,7 +100,7 @@ class App extends React.Component {
         </select>
         </div>
 
-      {mappedPokemon}
+      {mappedAndFiltered}
       </div>
     )
   }
