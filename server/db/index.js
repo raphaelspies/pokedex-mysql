@@ -15,9 +15,9 @@ module.exports = {
     var queryStr = `SELECT * FROM pokemon INNER JOIN images ON pokemon.id = images.id INNER JOIN types ON pokemon.typeNum = types.id`
     connection.query(queryStr, (error, result) => {
       if (error) {
-        callback(error)
+        callback(error, null)
       } else {
-        callback(result)
+        callback(null, result)
       }
     })
   }
