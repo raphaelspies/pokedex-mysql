@@ -11,9 +11,15 @@ connection.connect();
 
 module.exports = {
 
-  getAll: () => {
-    connection.query()
-
+  getAll: (callback) => {
+    var queryStr = `SELECT * FROM pokemon INNER JOIN images ON pokemon.id = images.id INNER JOIN types ON pokemon.typeNum = types.id`
+    connection.query(queryStr, (error, result) => {
+      if (error) {
+        callback(error)
+      } else {
+        callback(result)
+      }
+    })
   }
 
 }

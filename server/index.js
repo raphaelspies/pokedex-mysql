@@ -16,6 +16,15 @@ app.listen(port, () => {
 
 app.use(express.static(path.join(__dirname,  '../client/dist')))
 
-// app.get('/', (req, res) => {
-//   res.send('hello, world')
-// })
+app.get('/all', (req, res) => {
+  database.getAll((err, data) => {
+    if (err) {
+      console.log('error from express while calling database.getAll:')
+      console.log(err)
+      res.status(400).send(err)
+    } else {
+      console.log('successfully called database.getAll')
+      res.status(200).send(data)
+    }
+  })
+})
