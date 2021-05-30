@@ -5,10 +5,13 @@ class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      pokedex: []
+      pokedex: [],
+      dropdown: ""
     }
     this.getFromDB = this.getFromDB.bind(this);
     this.changeState = this.changeState.bind(this);
+    this.handleFormChange = this.handleFormChange.bind(this);
+    this.handleShowAllClick = this.handleShowAllClick.bind(this);
   }
 
   componentDidMount() {
@@ -32,6 +35,21 @@ class App extends React.Component {
     })
   }
 
+  handleFormChange(e) {
+    e.preventDefault()
+    this.setState({
+      dropdown: e.target.value
+    })
+    console.log(e.target.value)
+  }
+
+  handleShowAllClick(e) {
+    e.preventDefault()
+    this.setState({
+      dropdown: ""
+    })
+  }
+
   render() {
     var mappedPokemon = this.state.pokedex.map((pokemon, index) => {
       return (
@@ -49,8 +67,8 @@ class App extends React.Component {
       <div>
         <div>
         <h1>Fullstack Pokedex!</h1>
-        <button>Show All</button>
-        <select id="types">
+        <button value="" onClick={this.handleShowAllClick}>Show All</button>
+        <select id="types" onChange={this.handleFormChange}>
           <option>Sort by Type</option>
           <option>Grass</option>
           <option>Fire</option>
